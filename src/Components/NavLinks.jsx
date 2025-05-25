@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 
 const links = [
   { id: 1, url: "/", text: "Home" },
-  { id: 2, url: "found_item", text: "Found Item" },
+  { id: 2, url: "report_item", text: "Report Item" },
   { id: 3, url: "lost_item", text: "Lost Item" },
 ];
 const NavLinks = () => {

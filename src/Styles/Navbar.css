@@ -2,8 +2,10 @@ nav {
   width: 100vw;
   box-shadow: 2px 3px 8px;
 }
-.container {
+.flex {
   display: flex;
+}
+.container {
   justify-content: space-between;
   align-items: center;
   max-width: 1050px;

@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, useNavigation } from "react-router-dom";
 import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 const HomeLayout = () => {
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
@@ -14,6 +15,7 @@ const HomeLayout = () => {
           <Outlet />
         </section>
       )}
+      <Footer />
     </>
   );
 };

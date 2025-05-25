@@ -7,7 +7,7 @@ import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
 const Navbar = () => {
   return (
     <nav>
-      <div className="container">
+      <div className="flex container">
         <NavLink to="/" className="logo">
           {/* location logo here */}
           <FaMapMarkerAlt />
@@ -20,12 +20,16 @@ const Navbar = () => {
           <input type="text" placeholder="Search" />
         </div>
         <div className="button-container">
-          <button type="button" className="login">
-            Login
-          </button>
-          <button type="button" className="register">
-            Register
-          </button>
+          <NavLink to="login">
+            <button type="button" className="login">
+              Login
+            </button>
+          </NavLink>
+          <NavLink to="register">
+            <button type="button" className="register">
+              Register
+            </button>
+          </NavLink>
         </div>
       </div>
     </nav>
