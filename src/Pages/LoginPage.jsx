@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { MapPin, Mail, Lock, AlertCircle } from 'lucide-react';
-import './LoginPage.css';
+import '../Styles/LoginPage.css';
 
-// Assuming login is an imported function or prop
-// You can import it like: import { login } from './authService';
+
 
 const LoginPage = ({ login }) => {
   const navigate = useNavigate();
