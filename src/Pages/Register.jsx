@@ -1,7 +1,7 @@
 // src/registration/RegisterPage.jsx
 import React, { useState } from 'react';
 // import '../App.css';
-import './Register.css';
+import '../Styles/Register.css';
 
 const RegisterPage = () => {
   const [form, setForm] = useState({

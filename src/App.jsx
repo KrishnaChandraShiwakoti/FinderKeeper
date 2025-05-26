@@ -1,19 +1,25 @@
-import React from 'react';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import './App.css';
-import Register from './components/Register/Register';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Error, HomeLayout, Landing, Register } from "./Pages";
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomeLayout />,
+    errorElement: <Error />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
+      },
+    ],
+  },
+  {
+    path:"/login",
+    element: <Register />,
+    errorElement: <Error />,
+  }
+]);
 function App() {
-  return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Register />} />
-        </Routes>
-      </div>
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 }
-
 export default App;
