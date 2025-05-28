@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Error, HomeLayout, Landing, Login, Register } from "./Pages";
+import EmailVerification from "./Components/EmailVerification";
 
 const router = createBrowserRouter([
   {
@@ -14,16 +15,19 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path:"/Register",
+    path: "/register",
     element: <Register />,
     errorElement: <Error />,
-  },{
-    path:"/login",
+  },
+  {
+    path: "/login",
     errorElement: <Error />,
-
-    element: <Login/>
-
-  }
+    element: <Login />,
+  },
+  {
+    path: "/register/verification",
+    element: <EmailVerification />,
+  },
 ]);
 function App() {
   return <RouterProvider router={router} />;
