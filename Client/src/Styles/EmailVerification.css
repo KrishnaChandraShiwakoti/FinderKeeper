@@ -1,0 +1,41 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.verification-form {
+  display: flex;
+  gap: 10px;
+  text-align: center;
+  flex-direction: column;
+}
+.verification-form div {
+  display: flex;
+  width: 100%;
+  gap: 4px;
+}
+.verification-form input {
+  height: 70px;
+  width: 50px;
+  font-size: 30px;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.cancel-button {
+  color: #17a2a5;
+  background: white;
+  border: 2px solid black;
+  border-radius: 6px;
+  padding: 1rem;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 0.5rem;
+}
