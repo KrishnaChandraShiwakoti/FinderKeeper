@@ -1,10 +1,11 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import "../Styles/Navbar.css";
-import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
+import { FaSearch, FaMapMarkerAlt, FaUser } from "react-icons/fa";
 
 const Navbar = () => {
+  let user = localStorage.getItem("user") || null;
+
   return (
     <nav>
       <div className="flex container">
@@ -19,18 +20,22 @@ const Navbar = () => {
           <FaSearch />
           <input type="text" placeholder="Search" />
         </div>
-        <div className="button-container">
-          <NavLink to="login">
-            <button type="button" className="login">
-              Login
-            </button>
-          </NavLink>
-          <NavLink to="register">
-            <button type="button" className="register">
-              Register
-            </button>
-          </NavLink>
-        </div>
+        {user ? (
+          <FaUser />
+        ) : (
+          <div className="button-container">
+            <NavLink to="login">
+              <button type="button" className="login">
+                Login
+              </button>
+            </NavLink>
+            <NavLink to="register">
+              <button type="button" className="register">
+                Register
+              </button>
+            </NavLink>
+          </div>
+        )}
       </div>
     </nav>
   );

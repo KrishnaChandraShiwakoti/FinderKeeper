@@ -1,4 +1,4 @@
-import db from "../config/db";
+import db from "../config/db.js";
 import { DataTypes } from "sequelize";
 
 const User = db.define("User", {
@@ -25,7 +25,8 @@ const User = db.define("User", {
   otpExpiry: DataTypes.DATE,
   isVerified: {
     type: DataTypes.BOOLEAN,
-    allowNull: false,
+    allowNull: true,
+    defaultValue: false,
   },
 });
 
