@@ -1,13 +1,21 @@
 // src/registration/RegisterPage.jsx
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 // import '../App.css';
 import "../Styles/Register.css";
 import { auth } from "../Utlis/axios";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   const [form, setForm] = useState({
-    name: "",
+    fullname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -17,14 +25,22 @@ const RegisterPage = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.password != form.confirmPassword) {
+    if (form.password !== form.confirmPassword) {
+      alert("Passwords do not match.");
       return;
     }
-    auth.post("/register", { formData: form });
-    // Registration logic here
     console.log("Form submitted:", form);
+    const res = await auth.post("/register", { formData: form });
+    if (res.status == 201) {
+      toast.success(res.data.message);
+      localStorage.setItem("registered", "true");
+      navigate(`/register/verification?email=${form.email}`);
+    } else {
+      console.log(res.data.message);
+      toast.error(res.data.message);
+    }
   };
 
   return (
@@ -53,7 +69,7 @@ const RegisterPage = () => {
 
         <form className="register-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Full Name</label>
+            <label htmlFor="fullname">Full Name</label>
             <div className="input-wrapper">
               <span className="input-icon">
                 <svg
@@ -70,7 +86,7 @@ const RegisterPage = () => {
               <input
                 type="text"
                 id="name"
-                name="name"
+                name="fullname"
                 placeholder="John Doe"
                 value={form.name}
                 onChange={handleChange}
