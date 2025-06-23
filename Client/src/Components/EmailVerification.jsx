@@ -22,6 +22,7 @@ const EmailVerification = () => {
     if (!registered) {
       navigate("/register"); // or show a warning message
     }
+    localStorage.clear();
   }, []);
   const handleChange = (index, e) => {
     const newValues = [...values];

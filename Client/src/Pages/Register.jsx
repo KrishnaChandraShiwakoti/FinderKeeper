@@ -31,15 +31,20 @@ const RegisterPage = () => {
       alert("Passwords do not match.");
       return;
     }
-    console.log("Form submitted:", form);
-    const res = await auth.post("/register", { formData: form });
-    if (res.status == 201) {
-      toast.success(res.data.message);
-      localStorage.setItem("registered", "true");
-      navigate(`/register/verification?email=${form.email}`);
-    } else {
-      console.log(res.data.message);
-      toast.error(res.data.message);
+    try {
+      const res = await auth.post("/register", form);
+      console.log(res);
+      if (res.status == 201) {
+        toast.success(res.data.message);
+        localStorage.setItem("registered", "true");
+        navigate(`/register/verification?email=${form.email}`);
+      } else if (res.status == 203) {
+        navigate(`/register/verification?email=${form.email}`);
+        localStorage.setItem("registered", "true");
+      }
+    } catch (error) {
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 
