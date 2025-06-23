@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { MapPin, Mail, Lock, AlertCircle } from 'lucide-react';
-import '../Styles/LoginPage.css';
+import React, { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import { MapPin, Mail, Lock, AlertCircle } from "lucide-react";
+import "../Styles/LoginPage.css";
+import { auth } from "../Utlis/axios";
+import { toast } from "react-toastify";
 
 const LoginPage = ({ login }) => {
   const navigate = useNavigate();
   const location = useLocation();
+
   const { redirectTo } = location.state || {};
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Local state for loading
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
+    // Clear error for this field
     if (errors[name]) {
       setErrors({ ...errors, [name]: undefined });
     }
@@ -31,13 +35,13 @@ const LoginPage = ({ login }) => {
     const newErrors = {};
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+      newErrors.email = "Email is invalid";
     }
 
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
     }
 
     setErrors(newErrors);
@@ -50,17 +54,37 @@ const LoginPage = ({ login }) => {
     if (!validateForm()) {
       return;
     }
-
     setIsLoading(true);
     try {
-      await login(formData.email, formData.password);
-      navigate(redirectTo || '/');
+      const res = await auth.post("/login", { formData: formData });
+      console.log(res);
+
+      if (res.status == 201) {
+        toast.success("Logged in successfully");
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            name: res.data.fullname,
+            email: res.data.email,
+            user_id: res.data.user_id,
+          })
+        );
+        navigate("/");
+      } else {
+        toast.error(res.data.message);
+      }
+      setIsLoading(false);
     } catch (error) {
-      setErrors({
-        ...errors,
-        general: 'Invalid email or password',
-      });
-    } finally {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(error.message);
+      }
+      console.log(error);
       setIsLoading(false);
     }
   };
@@ -102,7 +126,7 @@ const LoginPage = ({ login }) => {
                     autoComplete="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`form-input ${errors.email ? 'error' : ''}`}
+                    className={`form-input ${errors.email ? "error" : ""}`}
                     placeholder="your@email.com"
                   />
                 </div>
@@ -122,11 +146,13 @@ const LoginPage = ({ login }) => {
                     autoComplete="current-password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    className={`form-input ${errors.password ? 'error' : ''}`}
+                    className={`form-input ${errors.password ? "error" : ""}`}
                     placeholder="••••••••"
                   />
                 </div>
-                {errors.password && <p className="error-message">{errors.password}</p>}
+                {errors.password && (
+                  <p className="error-message">{errors.password}</p>
+                )}
               </div>
             </div>
 
@@ -145,16 +171,15 @@ const LoginPage = ({ login }) => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="button button-primary full-width"
-              >
-                {isLoading ? 'Signing in...' : 'Sign in'}
+                className="button button-primary full-width">
+                {isLoading ? "Signing in..." : "Sign in"}
               </button>
             </div>
           </form>
 
           <div className="auth-footer">
             <p>
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <Link to="/register" className="auth-link">
                 Sign up
               </Link>

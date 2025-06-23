@@ -1,0 +1,72 @@
+/* Sidebar styles for dashboard */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 220px;
+  background: #1976d2;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 2rem;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+  z-index: 200;
+  transition: transform 0.3s ease;
+}
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+.sidebar.open {
+  transform: translateX(0);
+}
+.sidebar-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem 1.5rem 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-bottom: 1px solid #ffffff22;
+}
+.sidebar-links {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-left: 1.2rem;
+}
+.sidebar-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.sidebar-link:hover {
+  color: #bbdefb;
+}
+.hamburger {
+  position: fixed;
+  top: 1.2rem;
+  left: 1.2rem;
+  z-index: 300;
+  background: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 1.7rem;
+}
+@media (max-width: 600px) {
+  .sidebar {
+    width: 70vw;
+    min-width: 160px;
+  }
+}

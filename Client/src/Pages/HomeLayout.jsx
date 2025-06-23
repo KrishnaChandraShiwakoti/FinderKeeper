@@ -17,7 +17,7 @@ const HomeLayout = () => {
       )}
       <Footer />
     </>
-  );
+  )
 };
 
 export default HomeLayout;

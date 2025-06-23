@@ -4,7 +4,7 @@ const ExplanationCard = ({ description, title, icon }) => {
   return (
     <div className="how-card">
       <div className="how-icon">
-        <div className="icon-medium">{icon}</div>
+        <div className="">{icon}</div>
       </div>
       <h3 className="how-title">{title}</h3>
       <p className="how-text">{description}</p>
