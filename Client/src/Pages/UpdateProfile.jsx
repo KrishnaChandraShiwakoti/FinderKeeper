@@ -1,26 +1,26 @@
-import { useState } from 'react';
-import './UpdateProfile.css';
+import { useState } from "react";
+// import "../Styles/UpdateProfile.css";
 
 export default function UpdateProfile() {
   const [formData, setFormData] = useState({
-    location: '',
-    firstName: '',
-    lastName: '',
-    workNumber: '',
-    mobileNumber: '',
-    email: '',
-    workAddress: '',
-    currentPassword: '',
-    newPassword: '',
-    makePublic: false
+    location: "",
+    firstName: "",
+    lastName: "",
+    workNumber: "",
+    mobileNumber: "",
+    email: "",
+    workAddress: "",
+    currentPassword: "",
+    newPassword: "",
+    makePublic: false,
   });
   const [profilePic, setProfilePic] = useState(null);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -33,21 +33,21 @@ export default function UpdateProfile() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Profile updated!');
+    alert("Profile updated!");
   };
 
   const handleReset = () => {
     setFormData({
-      location: '',
-      firstName: '',
-      lastName: '',
-      workNumber: '',
-      mobileNumber: '',
-      email: '',
-      workAddress: '',
-      currentPassword: '',
-      newPassword: '',
-      makePublic: false
+      location: "",
+      firstName: "",
+      lastName: "",
+      workNumber: "",
+      mobileNumber: "",
+      email: "",
+      workAddress: "",
+      currentPassword: "",
+      newPassword: "",
+      makePublic: false,
     });
     setProfilePic(null);
   };
@@ -58,7 +58,10 @@ export default function UpdateProfile() {
         <div className="profile-picture-section">
           <label htmlFor="profilePicInput" className="profile-picture-label">
             <img
-              src={profilePic || "https://bootdey.com/img/Content/avatar/avatar6.png"}
+              src={
+                profilePic ||
+                "https://bootdey.com/img/Content/avatar/avatar6.png"
+              }
               alt="User avatar"
               className="profile-picture"
             />
@@ -67,7 +70,7 @@ export default function UpdateProfile() {
               id="profilePicInput"
               type="file"
               accept="image/*"
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               onChange={handleProfilePicChange}
             />
           </label>
@@ -81,8 +84,7 @@ export default function UpdateProfile() {
               name="location"
               value={formData.location}
               onChange={handleChange}
-              className="profile-input"
-            >
+              className="profile-input">
               <option value="">Select country</option>
               <option value="Belgium">Belgium</option>
               <option value="Canada">Canada</option>
@@ -135,7 +137,7 @@ export default function UpdateProfile() {
               onChange={handleChange}
               className="profile-input"
             />
-          </div>  
+          </div>
         </div>
 
         {/* Security */}
@@ -179,7 +181,10 @@ export default function UpdateProfile() {
           <button type="submit" className="profile-btn profile-btn-primary">
             Submit
           </button>
-          <button type="button" onClick={handleReset} className="profile-btn profile-btn-secondary">
+          <button
+            type="button"
+            onClick={handleReset}
+            className="profile-btn profile-btn-secondary">
             Cancel
           </button>
         </div>
@@ -187,4 +192,3 @@ export default function UpdateProfile() {
     </div>
   );
 }
-

@@ -1,7 +1,14 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { FaBars, FaTimes, FaSearch, FaMapMarkerAlt, FaPlusCircle, FaUser, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaBars,
+  FaTimes,
+  FaSearch,
+  FaMapMarkerAlt,
+  FaPlusCircle,
+  FaUser,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import "../Styles/Navbar.css";
 
 const Navbar = () => {
@@ -49,19 +56,25 @@ const Navbar = () => {
             <span className="navbar-title">FinderKeeper</span>
           </Link>
           <div className="navbar-links desktop-only">
-            <NavLink to="/" className="navbar-link">Home</NavLink>
-            <NavLink to="/search" className="navbar-link">
-              <FaSearch className="navbar-link-icon" />Browse Items
+            <NavLink to="/" className="navbar-link">
+              Home
             </NavLink>
-            <NavLink to="/item/new" className="navbar-link">
-              <FaPlusCircle className="navbar-link-icon" />Report Item
+            <NavLink to="/search" className="navbar-link">
+              <FaSearch className="navbar-link-icon" />
+              Browse Items
+            </NavLink>
+            <NavLink to="/reportItem" className="navbar-link">
+              <FaPlusCircle className="navbar-link-icon" />
+              Report Item
             </NavLink>
           </div>
         </div>
         <div className="navbar-right desktop-only">
           {user ? (
             <div className="user-dropdown-container" ref={dropdownRef}>
-              <div className="user-icon" onClick={() => setDropdownOpen((v) => !v)}>
+              <div
+                className="user-icon"
+                onClick={() => setDropdownOpen((v) => !v)}>
                 <FaUser className="navbar-link-icon" />
               </div>
               {dropdownOpen && (
@@ -69,27 +82,49 @@ const Navbar = () => {
                   <div className="dropdown-user-info">
                     <div className="dropdown-user-name">{user.name}</div>
                     <div className="dropdown-user-email">{user.email}</div>
-                    <hr style={{ margin: '8px 0', border: 0, borderTop: '1px solid #eee' }} />
+                    <hr
+                      style={{
+                        margin: "8px 0",
+                        border: 0,
+                        borderTop: "1px solid #eee",
+                      }}
+                    />
                   </div>
-                  <Link to="/profile" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
+                  <Link
+                    to="/profile"
+                    className="dropdown-item"
+                    onClick={() => setDropdownOpen(false)}>
                     Profile
                   </Link>
-                  <Link to="/account" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
+                  <Link
+                    to="/account"
+                    className="dropdown-item"
+                    onClick={() => setDropdownOpen(false)}>
                     Account
                   </Link>
-                  <Link to="/settings" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
+                  <Link
+                    to="/settings"
+                    className="dropdown-item"
+                    onClick={() => setDropdownOpen(false)}>
                     Settings
                   </Link>
-                  <button className="dropdown-item logout-btn" onClick={handleLogout}>
-                    <FaSignOutAlt style={{ marginRight: 8 }} />Logout
+                  <button
+                    className="dropdown-item logout-btn"
+                    onClick={handleLogout}>
+                    <FaSignOutAlt style={{ marginRight: 8 }} />
+                    Logout
                   </button>
                 </div>
               )}
             </div>
           ) : (
             <>
-              <Link to="/login" className="navbar-login">Login</Link>
-              <Link to="/register" className="navbar-register">Register</Link>
+              <Link to="/login" className="navbar-login">
+                Login
+              </Link>
+              <Link to="/register" className="navbar-register">
+                Register
+              </Link>
             </>
           )}
         </div>
@@ -101,35 +136,62 @@ const Navbar = () => {
       </div>
       {isMenuOpen && (
         <div className="mobile-menu mobile-only">
-          <NavLink to="/" className="mobile-link" onClick={toggleMenu}>Home</NavLink>
+          <NavLink to="/" className="mobile-link" onClick={toggleMenu}>
+            Home
+          </NavLink>
           <NavLink to="/search" className="mobile-link" onClick={toggleMenu}>
-            <FaSearch className="navbar-link-icon" />Browse Items
+            <FaSearch className="navbar-link-icon" />
+            Browse Items
           </NavLink>
           <NavLink to="/item/new" className="mobile-link" onClick={toggleMenu}>
-            <FaPlusCircle className="navbar-link-icon" />Report Item
+            <FaPlusCircle className="navbar-link-icon" />
+            Report Item
           </NavLink>
           <div className="mobile-divider" />
           {user ? (
             <>
-              <NavLink to="/profile" className="mobile-link" onClick={toggleMenu}>
-                <FaUser className="navbar-link-icon" />Profile
+              <NavLink
+                to="/updateProfile"
+                className="mobile-link"
+                onClick={toggleMenu}>
+                <FaUser className="navbar-link-icon" />
+                Profile
               </NavLink>
-              <NavLink to="/account" className="mobile-link" onClick={toggleMenu}>
+              <NavLink
+                to="/account"
+                className="mobile-link"
+                onClick={toggleMenu}>
                 Account
               </NavLink>
-              <NavLink to="/settings" className="mobile-link" onClick={toggleMenu}>
+              <NavLink
+                to="/settings"
+                className="mobile-link"
+                onClick={toggleMenu}>
                 Settings
               </NavLink>
-              <button className="mobile-link mobile-logout" onClick={() => { handleLogout(); toggleMenu(); }}>
-                <FaSignOutAlt className="navbar-link-icon" />Logout
+              <button
+                className="mobile-link mobile-logout"
+                onClick={() => {
+                  handleLogout();
+                  toggleMenu();
+                }}>
+                <FaSignOutAlt className="navbar-link-icon" />
+                Logout
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="mobile-link" onClick={toggleMenu}>Login</Link>
-              <Link to="/register" className="mobile-link" onClick={toggleMenu}>Register</Link>
+              <Link to="/login" className="mobile-link" onClick={toggleMenu}>
+                Login
+              </Link>
+              <Link to="/register" className="mobile-link" onClick={toggleMenu}>
+                Register
+              </Link>
             </>
           )}
         </div>
       )}
+    </nav>
+  );
+};
 export default Navbar;

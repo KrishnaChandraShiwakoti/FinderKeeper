@@ -1,18 +1,21 @@
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import "../Styles/Profile.css";
+import { useNavigate } from "react-router-dom";
 
 // Simulate user data from localStorage (replace with real API in production)
 const getUser = () => {
   try {
     const user = JSON.parse(localStorage.getItem("user"));
-    return user || {
-      name: "John Doe",
-      email: "john.doe@email.com",
-      phone: "+1 234 567 8901",
-      joined: "2024-01-15",
-      location: "New York, USA",
-    };
+    return (
+      user || {
+        name: "John Doe",
+        email: "john.doe@email.com",
+        phone: "+1 234 567 8901",
+        joined: "2024-01-15",
+        location: "New York, USA",
+      }
+    );
   } catch {
     return {
       name: "John Doe",
@@ -26,6 +29,7 @@ const getUser = () => {
 
 const Profile = () => {
   const user = getUser();
+  const navigate = useNavigate();
   return (
     <div className="profile-container">
       <div className="profile-avatar">
@@ -48,7 +52,11 @@ const Profile = () => {
         </div>
       </div>
       <div className="profile-actions">
-        <button className="profile-btn">Edit Profile</button>
+        <button
+          className="profile-btn"
+          onClick={() => navigate("/updateProfile")}>
+          Edit Profile
+        </button>
         <button className="profile-btn" style={{ background: "#e53935" }}>
           Delete Account
         </button>

@@ -16,16 +16,33 @@ const transporter = nodemailer.createTransport({
 // Generate OTP
 const generateOTP = () => crypto.randomInt(100000, 999999).toString();
 
-export const addUser = async (req, res) => {
-  const { fullname, email, password } = req.body.formData;
-
-  let user = await User.findOne({ where: { email } });
-  console.log("User found:", user);
-  if (user) {
-    return res.status(400).json({ message: "User already exists" });
-  }
+const sendOtp = (email) => {
   const otp = generateOTP();
   const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
+  transporter.sendMail({
+    from: "Finder Keeper",
+    to: email,
+    subject: "OTP Verification",
+    text: `Your OTP is: ${otp}`,
+  });
+};
+
+export const addUser = async (req, res) => {
+  const { fullname, email, password } = req.body;
+
+  let user = await User.findOne({ where: { email } });
+  // console.log("User found:", user);
+  console.log(user != null);
+  if (user != null) {
+    if (user.dataValues.isVerified === false) {
+      await sendOtp(email);
+      return res
+        .status(203)
+        .json({ message: "User already exists but not verified" });
+    }
+    return res.status(400).json({ message: "User already exists" });
+  }
+
   try {
     bcrypt.hash(password, saltRounds, async (err, hash) => {
       if (err) {
@@ -38,14 +55,7 @@ export const addUser = async (req, res) => {
           otp,
           otpExpiry,
         });
-
-        await transporter.sendMail({
-          from: "Finder Keeper",
-          to: email,
-          subject: "OTP Verification",
-          text: `Your OTP is: ${otp}`,
-        });
-
+        await sendOtp(email);
         return res
           .status(201)
           .json({ message: "User registered successfully" });

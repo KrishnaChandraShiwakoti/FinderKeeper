@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
@@ -137,7 +136,9 @@ const LoginPage = ({ login }) => {
                     placeholder="your@email.com"
                   />
                 </div>
-                {errors.email && <p className="error-message">{errors.email}</p>}
+                {errors.email && (
+                  <p className="error-message">{errors.email}</p>
+                )}
               </div>
 
               <div className="form-field">

@@ -1,5 +1,16 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Error, HomeLayout, Landing, Login, Register, Profile, Account, Settings } from "./Pages";
+import {
+  Error,
+  HomeLayout,
+  Landing,
+  Login,
+  Register,
+  Profile,
+  Account,
+  Settings,
+  UpdateProfile,
+  ReportItem,
+} from "./Pages";
 import EmailVerification from "./Components/EmailVerification";
 
 const router = createBrowserRouter([
@@ -11,6 +22,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
+      },
+      {
+        path: "/updateProfile",
+        element: <UpdateProfile />,
+      },
+      {
+        path: "/reportItem",
+        element: <ReportItem />,
       },
     ],
   },
