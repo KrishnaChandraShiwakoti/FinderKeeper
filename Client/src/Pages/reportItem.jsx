@@ -1,35 +1,35 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './ReportItem.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../Styles/ReportItem.css";
 
 const categories = [
-  'Electronics',
-  'Jewelry',
-  'Clothing',
-  'Documents',
-  'Bags',
-  'Keys',
-  'Other'
+  "Electronics",
+  "Jewelry",
+  "Clothing",
+  "Documents",
+  "Bags",
+  "Keys",
+  "Other",
 ];
 
 const ReportItem = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     status: false,
-    name: '',
-    description: '',
-    category: '',
-    dateLost: '',
-    location: '',
+    name: "",
+    description: "",
+    category: "",
+    dateLost: "",
+    location: "",
     image: null,
-    email: '',
+    email: "",
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
-    if (type === 'checkbox') {
+    if (type === "checkbox") {
       setForm({ ...form, [name]: checked });
-    } else if (type === 'file') {
+    } else if (type === "file") {
       setForm({ ...form, image: files[0] });
     } else {
       setForm({ ...form, [name]: value });
@@ -43,14 +43,16 @@ const ReportItem = () => {
   };
 
   const handleCancel = () => {
-    navigate('/register', { replace: true });
+    navigate("/register", { replace: true });
   };
 
   return (
     <div className="report-bg">
       <form className="report-container" onSubmit={handleSubmit}>
         <div className="report-back">
-          <Link to="/register" className="back-link">&lt; Back to Register</Link>
+          <Link to="/register" className="back-link">
+            &lt; Back to Register
+          </Link>
         </div>
         <h2 className="report-title">Report an Item</h2>
 
@@ -104,11 +106,12 @@ const ReportItem = () => {
               name="category"
               value={form.category}
               onChange={handleChange}
-              required
-            >
+              required>
               <option value="">Select a category</option>
               {categories.map((cat) => (
-                <option key={cat} value={cat}>{cat}</option>
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
               ))}
             </select>
           </div>
@@ -143,12 +146,23 @@ const ReportItem = () => {
           <div className="image-upload">
             <label htmlFor="image-upload-input" className="image-upload-label">
               <div className="image-upload-box">
-                <svg width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="48" height="48" rx="8" fill="#F3F4F6"/>
-                  <path d="M24 16v16M16 24h16" stroke="#17A2A5" strokeWidth="2" strokeLinecap="round"/>
+                <svg
+                  width="48"
+                  height="48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#F3F4F6" />
+                  <path
+                    d="M24 16v16M16 24h16"
+                    stroke="#17A2A5"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
                 </svg>
                 <div>
-                  <span className="upload-text">Upload an image or drag and drop</span>
+                  <span className="upload-text">
+                    Upload an image or drag and drop
+                  </span>
                   <span className="upload-hint">PNG, JPG, GIF up to 10MB</span>
                 </div>
               </div>
@@ -158,10 +172,12 @@ const ReportItem = () => {
                 name="image"
                 accept="image/png, image/jpeg, image/gif"
                 onChange={handleChange}
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
               />
             </label>
-            {form.image && <div className="image-filename">{form.image.name}</div>}
+            {form.image && (
+              <div className="image-filename">{form.image.name}</div>
+            )}
           </div>
         </div>
 
@@ -179,8 +195,12 @@ const ReportItem = () => {
         </div>
 
         <div className="form-actions">
-          <button type="button" className="cancel-btn" onClick={handleCancel}>Back to Register</button>
-          <button type="submit" className="submit-btn">Submit Report</button>
+          <button type="button" className="cancel-btn" onClick={handleCancel}>
+            Back to Register
+          </button>
+          <button type="submit" className="submit-btn">
+            Submit Report
+          </button>
         </div>
       </form>
     </div>

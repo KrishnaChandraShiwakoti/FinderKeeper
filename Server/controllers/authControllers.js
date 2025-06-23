@@ -115,7 +115,7 @@ export const login = async (req, res) => {
         if (result) {
           return res
             .status(201)
-            .json({ fullname: user.fullname, user_id: user.id });
+            .json({ fullname: user.fullname, user_id: user.id, email: user.email });
         } else {
           res.status(400).json({ message: "Incorrect password" });
         }
