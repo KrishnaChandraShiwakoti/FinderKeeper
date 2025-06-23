@@ -1,7 +1,8 @@
-import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+// src/registration/RegisterPage.jsx
+import React, { useEffect, useState } from "react";
 // import '../App.css';
 import "../Styles/Register.css";
 import { auth } from "../Utlis/axios";
@@ -9,6 +10,12 @@ import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   const [form, setForm] = useState({
     fullname: "",
     email: "",

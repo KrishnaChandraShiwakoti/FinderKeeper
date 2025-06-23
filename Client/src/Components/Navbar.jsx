@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes, FaSearch, FaMapMarkerAlt, FaPlusCircle, FaUser, FaSignOutAlt } from "react-icons/fa";
@@ -131,8 +132,4 @@ const Navbar = () => {
           )}
         </div>
       )}
-    </nav>
-  );
-};
-
 export default Navbar;

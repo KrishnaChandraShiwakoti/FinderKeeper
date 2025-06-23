@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import React, { useEffect, useState } from "react";
 import { MapPin, Mail, Lock, AlertCircle } from "lucide-react";
 import "../Styles/LoginPage.css";
 import { auth } from "../Utlis/axios";
@@ -11,6 +12,12 @@ const LoginPage = ({ login }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   const { redirectTo } = location.state || {};
 
   const [formData, setFormData] = useState({
