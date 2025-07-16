@@ -6,6 +6,7 @@ import { MapPin, Mail, Lock, AlertCircle } from "lucide-react";
 import "../Styles/LoginPage.css";
 import { auth } from "../Utlis/axios";
 import { toast } from "react-toastify";
+import { onLoginSuccess } from "../Utlis/jwt";
 
 const LoginPage = ({ login }) => {
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ const LoginPage = ({ login }) => {
             user_id: res.data.user_id,
           })
         );
+        onLoginSuccess(res.data.token);
         navigate("/");
       } else {
         toast.error(res.data.message);

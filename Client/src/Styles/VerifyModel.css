@@ -1,0 +1,20 @@
+.verify-container {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  position: fixed;
+  top: 44%;
+  left: 45%;
+  width: 300px;
+  background-color: azure;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 1px 2px 3px 2px;
+  text-align: center;
+  z-index: 1;
+}
+.btns-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}

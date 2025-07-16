@@ -7,9 +7,11 @@ import React, { useEffect, useState } from "react";
 import "../Styles/Register.css";
 import { auth } from "../Utlis/axios";
 import { toast } from "react-toastify";
+import VerifyModel from "../Components/VerifyModel";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const [isVerified, setIsVerified] = useState(false);
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -41,8 +43,7 @@ const RegisterPage = () => {
         localStorage.setItem("registered", "true");
         navigate(`/register/verification?email=${form.email}`);
       } else if (res.status == 203) {
-        navigate(`/register/verification?email=${form.email}`);
-        localStorage.setItem("registered", "true");
+        setIsVerified(true);
       }
     } catch (error) {
       console.log(error.response.data.message);
@@ -52,6 +53,17 @@ const RegisterPage = () => {
 
   return (
     <>
+      {isVerified ? (
+        <VerifyModel
+          title="Report"
+          description="Quickly report a lost item or register something you've found to
+            help it find its way home."
+          form={form}
+          setFalse={setIsVerified}
+        />
+      ) : (
+        ""
+      )}
       <Navbar />
       <div className="register-bg">
         <div className="register-container">
@@ -62,7 +74,13 @@ const RegisterPage = () => {
                 height="40"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="20" fill="#17A2A5" fillOpacity="0.1" />
+                <circle
+                  cx="20"
+                  cy="20"
+                  r="20"
+                  fill="#17A2A5"
+                  fillOpacity="0.1"
+                />
                 <path
                   d="M20 12a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
                   fill="#17A2A5"
@@ -219,9 +237,8 @@ const RegisterPage = () => {
 
           <div className="register-footer">
             <p className="terms">
-              By signing up, you agree to our{" "}
-              <a href="#">Terms of Service</a> and{" "}
-              <a href="#">Privacy Policy</a>
+              By signing up, you agree to our <a href="#">Terms of Service</a>{" "}
+              and <a href="#">Privacy Policy</a>
             </p>
             <p className="signin">
               <Link to="/login">Already have an account? Sign in</Link>
