@@ -38,20 +38,20 @@ const ReportItem = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Submit logic here
+
     console.log(form);
   };
 
   const handleCancel = () => {
-    navigate("/register", { replace: true });
+    navigate("/", { replace: true });
   };
 
   return (
     <div className="report-bg">
       <form className="report-container" onSubmit={handleSubmit}>
         <div className="report-back">
-          <Link to="/register" className="back-link">
-            &lt; Back to Register
+          <Link to="/" className="back-link">
+            &lt; Back to Home
           </Link>
         </div>
         <h2 className="report-title">Report an Item</h2>
@@ -196,7 +196,7 @@ const ReportItem = () => {
 
         <div className="form-actions">
           <button type="button" className="cancel-btn" onClick={handleCancel}>
-            Back to Register
+            Back to Home
           </button>
           <button type="submit" className="submit-btn">
             Submit Report

@@ -12,6 +12,8 @@ import {
   ReportItem,
 } from "./Pages";
 import EmailVerification from "./Components/EmailVerification";
+import { useEffect } from "react";
+import { checkTokenExpiry } from "./Utlis/jwt";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +66,9 @@ const router = createBrowserRouter([
   },
 ]);
 function App() {
+  useEffect(() => {
+    checkTokenExpiry();
+  }, []);
   return <RouterProvider router={router} />;
 }
 export default App;

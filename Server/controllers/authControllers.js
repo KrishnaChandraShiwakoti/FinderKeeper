@@ -1,7 +1,8 @@
-import User from "../modules/user.js";
+import User from "../model/user.js";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
+import { generateToken } from "../security/jwt-util.js";
 
 const saltRounds = 10;
 
@@ -113,9 +114,13 @@ export const login = async (req, res) => {
         console.error("Error comparing passwords:", err);
       } else {
         if (result) {
-          return res
-            .status(201)
-            .json({ fullname: user.fullname, user_id: user.id, email: user.email });
+          const token = generateToken({ id: user.id });
+          return res.status(201).json({
+            fullname: user.fullname,
+            user_id: user.id,
+            email: user.email,
+            token,
+          });
         } else {
           res.status(400).json({ message: "Incorrect password" });
         }
