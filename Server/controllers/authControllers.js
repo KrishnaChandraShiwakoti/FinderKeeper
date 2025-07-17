@@ -28,6 +28,24 @@ const sendOtp = (email) => {
   });
 };
 
+export const sendOtps = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ where: { email } });
+  if (!user || user == null) {
+    res.status(400).json({ message: "User not found" });
+  }
+  const otp = generateOTP();
+  const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
+  transporter.sendMail({
+    from: "Finder Keeper",
+    to: email,
+    subject: "OTP Verification",
+    text: `Your OTP is: ${otp}`,
+  });
+  await User.update({ otp }, { where: { email } });
+  res.status(200).json({ message: "Otp has been sent to your email" });
+};
+
 export const addUser = async (req, res) => {
   const { fullname, email, password } = req.body;
 
@@ -127,4 +145,23 @@ export const login = async (req, res) => {
       }
     });
   } catch (error) {}
+};
+export const resetPassword = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const hash = await bcrypt.hash(password, saltRounds);
+    const [updated] = await User.update(
+      { password: hash },
+      { where: { email } }
+    );
+
+    if (updated) {
+      res.status(200).json({ message: "Password updated successfully" });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error updating password:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
