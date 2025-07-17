@@ -8,3 +8,4 @@ export { default as Account } from "./Account";
 export { default as Settings } from "./Settings";
 export { default as UpdateProfile } from "./UpdateProfile";
 export { default as ReportItem } from "./reportItem";
+export { default as BrowserItems } from "./BrowserItems";

@@ -10,6 +10,7 @@ import {
   Settings,
   UpdateProfile,
   ReportItem,
+  BrowserItems,
 } from "./Pages";
 import EmailVerification from "./Components/EmailVerification";
 import { useEffect } from "react";
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/reportItem",
         element: <ReportItem />,
+      },
+      {
+        path: "/browse",
+        element: <BrowserItems />,
       },
     ],
   },

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Styles/ReportItem.css";
+import { items } from "../Utlis/axios";
+import { toast } from "react-toastify";
 
 const categories = [
   "Electronics",
@@ -14,6 +16,8 @@ const categories = [
 
 const ReportItem = () => {
   const navigate = useNavigate();
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [form, setForm] = useState({
     status: false,
     name: "",
@@ -21,10 +25,10 @@ const ReportItem = () => {
     category: "",
     dateLost: "",
     location: "",
-    image: null,
     email: "",
   });
-
+  const user = JSON.parse(localStorage.getItem("user"));
+  const BEARER_TOKEN = localStorage.getItem("token");
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
     if (type === "checkbox") {
@@ -35,11 +39,42 @@ const ReportItem = () => {
       setForm({ ...form, [name]: value });
     }
   };
-
-  const handleSubmit = (e) => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+      setImage(file);
+    }
+  };
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(form);
+    const formData = new FormData();
+    formData.append("status", form.status);
+    formData.append("name", form.name);
+    formData.append("description", form.description);
+    formData.append("category", form.category);
+    formData.append("dateLost", form.dateLost);
+    formData.append("location", form.location);
+    formData.append("email", form.email);
+    formData.append("userId", user.user_id);
+    if (image) {
+      formData.append("image", image);
+    }
+    try {
+      const res = await items.post("/", formData, {
+        headers: {
+          Authorization: `Bearer ${BEARER_TOKEN}`,
+          // Do not set Content-Type, let Axios handle it for FormData
+        },
+      });
+      if (res.status === 201) {
+        toast.success(res.data.message);
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Error uploading item");
+    }
   };
 
   const handleCancel = () => {
@@ -141,44 +176,27 @@ const ReportItem = () => {
           />
         </div>
 
-        <div className="form-group">
-          <label>Item Image</label>
-          <div className="image-upload">
-            <label htmlFor="image-upload-input" className="image-upload-label">
-              <div className="image-upload-box">
-                <svg
-                  width="48"
-                  height="48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <rect width="48" height="48" rx="8" fill="#F3F4F6" />
-                  <path
-                    d="M24 16v16M16 24h16"
-                    stroke="#17A2A5"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <div>
-                  <span className="upload-text">
-                    Upload an image or drag and drop
-                  </span>
-                  <span className="upload-hint">PNG, JPG, GIF up to 10MB</span>
-                </div>
+        <div className="featured-image-container">
+          <h3>Featured Image</h3>
+          <div className="image-preview">
+            {imagePreview ? (
+              <img src={imagePreview} alt="Selected" />
+            ) : (
+              <div className="placeholder">
+                <span role="img" aria-label="image icon">
+                  🖼️
+                </span>
+                <p>No image selected</p>
               </div>
-              <input
-                id="image-upload-input"
-                type="file"
-                name="image"
-                accept="image/png, image/jpeg, image/gif"
-                onChange={handleChange}
-                style={{ display: "none" }}
-              />
-            </label>
-            {form.image && (
-              <div className="image-filename">{form.image.name}</div>
             )}
           </div>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            id="fileUpload"
+            className="file-input"
+          />
         </div>
 
         <div className="form-group">

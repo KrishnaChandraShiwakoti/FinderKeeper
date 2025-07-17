@@ -59,7 +59,7 @@ const Navbar = () => {
             <NavLink to="/" className="navbar-link">
               Home
             </NavLink>
-            <NavLink to="/search" className="navbar-link">
+            <NavLink to="/browse" className="navbar-link">
               <FaSearch className="navbar-link-icon" />
               Browse Items
             </NavLink>
