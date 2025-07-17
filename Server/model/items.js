@@ -42,6 +42,13 @@ const Items = db.define("items", {
       key: "categoryId",
     },
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: "Users",
+      key: "id",
+    },
+  },
 });
 
 export default Items;

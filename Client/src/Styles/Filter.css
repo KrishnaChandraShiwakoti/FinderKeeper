@@ -1,0 +1,72 @@
+/* Filter component styles - matches app color palette */
+:root {
+  --primary: #2d6cdf;
+  --secondary: #f5f7fa;
+  --accent: #fbbf24;
+  --text: #22223b;
+  --muted: #a0aec0;
+  --card-bg: #fff;
+  --border: #e5e7eb;
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  margin: 2rem auto 2.5rem auto;
+  box-shadow: 0 2px 8px rgba(45, 108, 223, 0.07);
+  justify-content: center;
+  align-items: flex-end;
+  max-width: 900px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+}
+
+.filter-group label {
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.filter-group input,
+.filter-group select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: var(--text);
+  background: var(--secondary);
+  outline: none;
+  transition: border 0.2s;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+  border: 1.5px solid var(--primary);
+}
+
+.filter-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 1rem;
+  transition: background 0.2s;
+}
+
+.filter-btn:hover {
+  background: var(--accent);
+  color: var(--text);
+}
