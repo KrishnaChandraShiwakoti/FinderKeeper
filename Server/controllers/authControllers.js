@@ -17,9 +17,7 @@ const transporter = nodemailer.createTransport({
 // Generate OTP
 const generateOTP = () => crypto.randomInt(100000, 999999).toString();
 
-const sendOtp = (email) => {
-  const otp = generateOTP();
-  const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
+const sendOtp = (email, otp) => {
   transporter.sendMail({
     from: "Finder Keeper",
     to: email,
@@ -50,7 +48,8 @@ export const addUser = async (req, res) => {
   const { fullname, email, password } = req.body;
 
   let user = await User.findOne({ where: { email } });
-  // console.log("User found:", user);
+  const otp = generateOTP();
+  const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
   console.log(user != null);
   if (user != null) {
     if (user.dataValues.isVerified === false) {
@@ -67,14 +66,14 @@ export const addUser = async (req, res) => {
       if (err) {
         console.log("Error hashing password", err);
       } else {
-        const user = await User.create({
+        await User.create({
           fullname,
           email,
           password: hash,
           otp,
           otpExpiry,
         });
-        await sendOtp(email);
+        await sendOtp(email, otp);
         return res
           .status(201)
           .json({ message: "User registered successfully" });
@@ -137,6 +136,7 @@ export const login = async (req, res) => {
             fullname: user.fullname,
             user_id: user.id,
             email: user.email,
+            contact: user.contact,
             token,
           });
         } else {

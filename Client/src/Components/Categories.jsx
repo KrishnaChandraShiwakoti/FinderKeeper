@@ -1,5 +1,6 @@
 import { MapPin, Compass, MessageCircle, Zap, User } from "lucide-react";
 import "../Styles/Categories.css";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   { name: "Electronics", icon: <Zap />, category: "electronics" },
@@ -12,6 +13,12 @@ const categories = [
   { name: "Other", icon: <Compass />, category: "other" },
 ];
 const Categories = () => {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (category) => {
+    navigate(`/browse?category=${encodeURIComponent(category)}`);
+  };
+
   return (
     <section className="section categories-section">
       <div className="categories-container">
@@ -20,7 +27,7 @@ const Categories = () => {
           {categories.map((category, index) => (
             <button
               key={index}
-              onClick={() => handleCategoryClick(category.category)}
+              onClick={() => handleCategoryClick(category.name)}
               className="category-card">
               <div className="category-icon">{category.icon}</div>
               <span className="category-name">{category.name}</span>

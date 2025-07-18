@@ -23,6 +23,10 @@ const Items = db.define("items", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  claimed: {
+    type: DataTypes.ENUM,
+    values: ["NotClaimed", "Claimed", "StillMissing", "found"],
+  },
   contact: { type: DataTypes.STRING, allowNull: false },
   status: {
     type: DataTypes.ENUM,

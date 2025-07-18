@@ -21,6 +21,9 @@ const User = db.define("User", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  contact: {
+    type: DataTypes.BIGINT,
+  },
   otp: DataTypes.STRING,
   otpExpiry: DataTypes.DATE,
   isVerified: {
