@@ -1,0 +1,43 @@
+.terms-container {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  padding: 32px 24px;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+.terms-title {
+  text-align: center;
+  color: #2d6cdf;
+  font-size: 2.5rem;
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+.terms-content h2 {
+  color: #1a3a6b;
+  margin-top: 24px;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.terms-content p,
+.terms-content ul {
+  color: #444;
+  font-size: 1rem;
+  margin: 12px 0 0 0;
+  line-height: 1.7;
+}
+.terms-content ul {
+  padding-left: 20px;
+}
+.terms-content li {
+  margin-bottom: 8px;
+}
+@media (max-width: 600px) {
+  .terms-container {
+    padding: 16px 8px;
+  }
+  .terms-title {
+    font-size: 2rem;
+  }
+}

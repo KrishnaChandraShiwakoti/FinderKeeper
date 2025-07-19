@@ -6,15 +6,17 @@ import {
   Login,
   Register,
   Profile,
-  Account,
-  Settings,
   UpdateProfile,
   ReportItem,
   BrowserItems,
+  HelpFAQ,
+  TermsOfService,
+  PrivacyPolicy,
 } from "./Pages";
 import EmailVerification from "./Components/EmailVerification";
 import { useEffect } from "react";
 import { checkTokenExpiry } from "./Utlis/jwt";
+import SinglePost from "./Pages/SinglePost";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,26 @@ const router = createBrowserRouter([
         path: "/browse",
         element: <BrowserItems />,
       },
+      {
+        path: "/item/:id",
+        element: <SinglePost />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/faq",
+        element: <HelpFAQ />,
+      },
+      {
+        path: "/terms",
+        element: <TermsOfService />,
+      },
+      {
+        path: "/privacy",
+        element: <PrivacyPolicy />,
+      },
     ],
   },
   {
@@ -53,21 +75,6 @@ const router = createBrowserRouter([
   {
     path: "/register/verification",
     element: <EmailVerification />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/account",
-    element: <Account />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/settings",
-    element: <Settings />,
-    errorElement: <Error />,
   },
 ]);
 function App() {

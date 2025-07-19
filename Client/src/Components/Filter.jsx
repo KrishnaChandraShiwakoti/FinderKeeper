@@ -11,14 +11,13 @@ const categories = [
   "Other",
 ];
 
-const Filter = ({ onFilter }) => {
+const Filter = ({ onFilter, initialFilter }) => {
   const [filter, setFilter] = useState({
-    category: "",
+    category: initialFilter || "",
     location: "",
     dateFrom: "",
     dateTo: "",
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFilter((prev) => ({ ...prev, [name]: value }));
@@ -38,7 +37,7 @@ const Filter = ({ onFilter }) => {
           name="category"
           value={filter.category}
           onChange={handleChange}>
-          <option value="">All</option>
+          {!filter.category && <option value="">All</option>}
           {categories.map((cat) => (
             <option key={cat} value={cat}>
               {cat}

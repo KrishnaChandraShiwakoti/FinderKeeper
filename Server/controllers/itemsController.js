@@ -2,6 +2,7 @@ import User from "../model/user.js";
 import Images from "../model/image.js";
 import categories from "../model/category.js";
 import Items from "../model/items.js";
+import { where } from "sequelize";
 
 export const postItem = async (req, res) => {
   try {
@@ -15,6 +16,7 @@ export const postItem = async (req, res) => {
       email,
       location,
       userId,
+      claimed,
     } = req.body;
 
     // Check if file is uploaded
@@ -52,6 +54,7 @@ export const postItem = async (req, res) => {
       location,
       imageId: image.id,
       userId,
+      claimed,
     });
 
     return res.status(201).json({ message: "Item added successfully." });
@@ -66,10 +69,14 @@ export const deletePost = async (req, res) => {
   console.log(req.params);
 
   const { id } = req.params;
-  await Items.destroy({
-    where: { newsId: id },
-  });
-  res.send(200).json({ message: "News deleted successfully" });
+  try {
+    await Items.destroy({
+      where: { itemId: id },
+    });
+    res.send(200).json({ message: "Post deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: `Error ${error}` });
+  }
 };
 export const getItemsByUser = async (req, res) => {
   const { id } = req.params;
@@ -105,14 +112,21 @@ export const getAll = async (req, res) => {
       include: { model: Images, as: "image" },
     });
     if (data.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No data found for the given reporterId" });
+      return res.status(404).json({ message: "No data found" });
     }
+    // Fetch all categories once
+    const allCategories = await categories.findAll();
+    const categoryMap = {};
+    allCategories.forEach((cat) => {
+      categoryMap[cat.categoryId] = cat.category_name;
+    });
+
     const result = data.map((news) => {
+      const plain = news.toJSON();
       return {
-        ...news.toJSON(),
-        imageUrl: news.image ? `/uploads/${news.image.filename}` : null,
+        ...plain,
+        imageUrl: plain.image ? `/uploads/${plain.image.filename}` : null,
+        category: categoryMap[plain.categoryId] || "Unknown",
       };
     });
 
@@ -123,5 +137,87 @@ export const getAll = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "An error occurred while fetching data" });
+  }
+};
+export const getRecentItem = async (req, res) => {
+  try {
+    const data = await Items.findAll({
+      include: { model: Images, as: "image" },
+      order: [["createdAt", "DESC"]],
+      limit: 5,
+    });
+    if (data.length === 0) {
+      return res.status(404).json({ message: "No recent items found" });
+    }
+
+    // Fetch all categories once
+    const allCategories = await categories.findAll();
+    const categoryMap = {};
+    allCategories.forEach((cat) => {
+      categoryMap[cat.categoryId] = cat.category_name;
+    });
+
+    const result = data.map((item) => {
+      const plain = item.toJSON();
+      return {
+        ...plain,
+        imageUrl: plain.image ? `/uploads/${plain.image.filename}` : null,
+        category: categoryMap[plain.categoryId] || "Unknown",
+      };
+    });
+    res.status(200).json({
+      message: "Fetched recent items successfully",
+      data: result,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching recent items" });
+  }
+};
+export const getItemById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await Items.findByPk(id, {
+      include: { model: Images, as: "image" },
+    });
+    if (!data) {
+      return res.status(404).json({ message: "No item found" });
+    }
+    const plainData = data.toJSON();
+
+    // Find category name for this item
+    let categoryName = "Unknown";
+    if (plainData.categoryId) {
+      const categoryRecord = await categories.findOne({
+        where: { categoryId: plainData.categoryId },
+      });
+      if (categoryRecord) {
+        categoryName = categoryRecord.category_name;
+      }
+    }
+
+    const result = {
+      ...plainData,
+      imageUrl: plainData.image ? `/uploads/${plainData.image.filename}` : null,
+      category: categoryName,
+    };
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: { error } });
+  }
+};
+export const changeClaimedStatus = async (req, res) => {
+  const { id } = req.params;
+  const { claimed } = req.body;
+  try {
+    const item = Items.update({ claimed }, { where: { itemId: id } });
+    res.status(200).json({ message: "Item updated successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: { error } });
   }
 };

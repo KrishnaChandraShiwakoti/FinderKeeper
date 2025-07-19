@@ -58,12 +58,12 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/search" className="footer-link">
+                <Link to="/browse" className="footer-link">
                   Search
                 </Link>
               </li>
               <li>
-                <Link to="/item/new" className="footer-link">
+                <Link to="/reportItem" className="footer-link">
                   Report Item
                 </Link>
               </li>
@@ -75,27 +75,27 @@ const Footer = () => {
             <h3 className="footer-heading">Categories</h3>
             <ul className="footer-links">
               <li>
-                <Link to="/search?category=electronics" className="footer-link">
+                <Link to="/browse?category=electronics" className="footer-link">
                   Electronics
                 </Link>
               </li>
               <li>
-                <Link to="/search?category=jewelry" className="footer-link">
+                <Link to="/browse?category=jewelry" className="footer-link">
                   Jewelry
                 </Link>
               </li>
               <li>
-                <Link to="/search?category=documents" className="footer-link">
+                <Link to="/browse?category=documents" className="footer-link">
                   Documents
                 </Link>
               </li>
               <li>
-                <Link to="/search?category=keys" className="footer-link">
+                <Link to="/browse?category=keys" className="footer-link">
                   Keys
                 </Link>
               </li>
               <li>
-                <Link to="/search?category=pets" className="footer-link">
+                <Link to="/browse?category=pets" className="footer-link">
                   Pets
                 </Link>
               </li>
