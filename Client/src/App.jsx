@@ -13,6 +13,7 @@ import {
   BrowserItems,
 } from "./Pages";
 import EmailVerification from "./Components/EmailVerification";
+import { AdminLogin, AdminDashboard } from "./Admin";
 import { useEffect } from "react";
 import { checkTokenExpiry } from "./Utlis/jwt";
 
@@ -67,6 +68,16 @@ const router = createBrowserRouter([
   {
     path: "/settings",
     element: <Settings />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/admin/login",
+    element: <AdminLogin />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/admin/dashboard",
+    element: <AdminDashboard />,
     errorElement: <Error />,
   },
 ]);
