@@ -31,6 +31,35 @@ const User = db.define("User", {
     allowNull: true,
     defaultValue: false,
   },
+  isBlocked: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  blockedReason: {
+    type: DataTypes.TEXT,
+  },
+  blockedAt: {
+    type: DataTypes.DATE,
+  },
+  lastLoginAt: {
+    type: DataTypes.DATE,
+  },
+  role: {
+    type: DataTypes.ENUM,
+    values: ["user", "premium_user"],
+    defaultValue: "user",
+  },
+  phoneNumber: {
+    type: DataTypes.STRING,
+  },
+  totalTransactions: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  totalListings: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
 });
 
 export default User;

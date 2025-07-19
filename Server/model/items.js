@@ -53,6 +53,37 @@ const Items = db.define("items", {
       key: "id",
     },
   },
+  approvalStatus: {
+    type: DataTypes.ENUM,
+    values: ["pending", "approved", "rejected"],
+    defaultValue: "pending",
+  },
+  approvedBy: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: "Admins",
+      key: "id",
+    },
+  },
+  approvedAt: {
+    type: DataTypes.DATE,
+  },
+  rejectionReason: {
+    type: DataTypes.TEXT,
+  },
+  isActive: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
+  viewCount: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  priority: {
+    type: DataTypes.ENUM,
+    values: ["low", "normal", "high"],
+    defaultValue: "normal",
+  },
 });
 
 export default Items;

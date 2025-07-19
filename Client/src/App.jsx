@@ -14,6 +14,7 @@ import {
   PrivacyPolicy,
 } from "./Pages";
 import EmailVerification from "./Components/EmailVerification";
+import { AdminLogin, AdminDashboard } from "./Admin";
 import { useEffect } from "react";
 import { checkTokenExpiry } from "./Utlis/jwt";
 import SinglePost from "./Pages/SinglePost";
@@ -75,6 +76,31 @@ const router = createBrowserRouter([
   {
     path: "/register/verification",
     element: <EmailVerification />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/account",
+    element: <Account />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/settings",
+    element: <Settings />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/admin/login",
+    element: <AdminLogin />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/admin/dashboard",
+    element: <AdminDashboard />,
+    errorElement: <Error />,
   },
 ]);
 function App() {
