@@ -26,7 +26,13 @@ const ReportItem = () => {
     dateLost: "",
     location: "",
     email: "",
+    claimed: "",
   });
+
+  // Claimed options based on status
+  const claimedOptions = form.status
+    ? ["StillMissing", "Found"]
+    : ["NotClaimed", "Claimed"];
   const user = JSON.parse(localStorage.getItem("user"));
   const BEARER_TOKEN = localStorage.getItem("token");
   const handleChange = (e) => {
@@ -48,6 +54,10 @@ const ReportItem = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      navigate("/login");
+      return;
+    }
     const formData = new FormData();
     formData.append("status", form.status);
     formData.append("name", form.name);
@@ -57,6 +67,7 @@ const ReportItem = () => {
     formData.append("location", form.location);
     formData.append("email", form.email);
     formData.append("userId", user.user_id);
+    formData.append("claimed", form.claimed);
     if (image) {
       formData.append("image", image);
     }
@@ -64,7 +75,6 @@ const ReportItem = () => {
       const res = await items.post("/", formData, {
         headers: {
           Authorization: `Bearer ${BEARER_TOKEN}`,
-          // Do not set Content-Type, let Axios handle it for FormData
         },
       });
       if (res.status === 201) {
@@ -105,6 +115,22 @@ const ReportItem = () => {
             </label>
             <span className="status-label">Lost Item</span>
           </div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="claimed">Claimed Status</label>
+          <select
+            id="claimed"
+            name="claimed"
+            value={form.claimed}
+            onChange={handleChange}
+            required>
+            <option value="">Select status</option>
+            {claimedOptions.map((opt) => (
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="form-group">

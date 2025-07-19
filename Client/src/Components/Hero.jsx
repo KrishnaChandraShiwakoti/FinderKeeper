@@ -25,10 +25,10 @@ const Hero = () => {
         </div>
       </form>
       <div className="hero-links">
-        <Link to="/lost" className="link-lost">
+        <Link to="/reportItem" className="link-lost">
           I Lost Something
         </Link>
-        <Link to="/found" className="link-found">
+        <Link to="/reportItem" className="link-found">
           I Found Something
         </Link>
       </div>

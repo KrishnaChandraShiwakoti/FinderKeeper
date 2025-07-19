@@ -64,8 +64,6 @@ const LoginPage = ({ login }) => {
     setIsLoading(true);
     try {
       const res = await auth.post("/login", { formData: formData });
-      console.log(res);
-
       if (res.status == 201) {
         toast.success("Logged in successfully");
         localStorage.setItem(
@@ -73,6 +71,7 @@ const LoginPage = ({ login }) => {
           JSON.stringify({
             name: res.data.fullname,
             email: res.data.email,
+            contact: res.data.contact || null,
             user_id: res.data.user_id,
           })
         );

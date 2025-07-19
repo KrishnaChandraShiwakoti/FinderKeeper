@@ -1,3 +1,34 @@
+.browser-item-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+.claimed-badge {
+  padding: 0.3rem 1rem;
+  border-radius: 0.7rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: var(--accent);
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(45, 108, 223, 0.07);
+}
+.claimed-claimed {
+  background: #38a169;
+  color: #fff;
+}
+.claimed-notclaimed {
+  background: #e53e3e;
+  color: #fff;
+}
+.claimed-stillmissing {
+  background: #fbbf24;
+  color: var(--text);
+}
+.claimed-found {
+  background: #2d6cdf;
+  color: #fff;
+}
 /* Color palette: matching the app's modern, clean style */
 :root {
   --primary: #2d6cdf;
@@ -11,7 +42,6 @@
 
 .browser-items-bg {
   background: var(--secondary);
-  min-height: 100vh;
   padding: 2rem 0;
 }
 
@@ -55,6 +85,7 @@
 }
 .browser-item-card:hover {
   box-shadow: 0 4px 16px rgba(45, 108, 223, 0.15);
+  cursor: pointer;
 }
 
 .browser-item-image {

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
 import "./model/index.js";
 import { authRoutes, ItemRoutes, adminRoutes } from "./routes/index.js";
+import { authRoutes, ItemRoutes, UserRoutes } from "./routes/index.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -24,6 +25,7 @@ app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/item", ItemRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/user", UserRoutes);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

@@ -1,20 +1,20 @@
-import { useState } from "react";
-// import "../Styles/UpdateProfile.css";
+import { useEffect, useState } from "react";
+import "../Styles/UpdateProfile.css";
+import { useNavigate } from "react-router-dom";
+import { getUser } from "./Profile";
+import { userApi } from "../Utlis/axios";
+import { toast } from "react-toastify";
 
 export default function UpdateProfile() {
+  const user = getUser();
+  const BEARER_TOKEN = localStorage.getItem("token");
+
   const [formData, setFormData] = useState({
-    location: "",
-    firstName: "",
-    lastName: "",
-    workNumber: "",
-    mobileNumber: "",
-    email: "",
-    workAddress: "",
-    currentPassword: "",
-    newPassword: "",
-    makePublic: false,
+    name: user.name || "",
+    contact: user.contact || "",
+    email: user.email || "",
   });
-  const [profilePic, setProfilePic] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -23,92 +23,44 @@ export default function UpdateProfile() {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
 
-  const handleProfilePicChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfilePic(URL.createObjectURL(file));
+    try {
+      const res = await userApi.put(`/${user.user_id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${BEARER_TOKEN}`,
+        },
+      });
+      if (res.status == 200) {
+        toast.success(res.data.message);
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Failed to update profile", error);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Profile updated!");
-  };
-
   const handleReset = () => {
-    setFormData({
-      location: "",
-      firstName: "",
-      lastName: "",
-      workNumber: "",
-      mobileNumber: "",
-      email: "",
-      workAddress: "",
-      currentPassword: "",
-      newPassword: "",
-      makePublic: false,
-    });
-    setProfilePic(null);
+    navigate("/");
   };
 
   return (
     <div className="profile-bg">
       <form className="profile-form" onSubmit={handleSubmit}>
-        <div className="profile-picture-section">
-          <label htmlFor="profilePicInput" className="profile-picture-label">
-            <img
-              src={
-                profilePic ||
-                "https://bootdey.com/img/Content/avatar/avatar6.png"
-              }
-              alt="User avatar"
-              className="profile-picture"
-            />
-            <span className="profile-picture-change-text">Change Photo</span>
-            <input
-              id="profilePicInput"
-              type="file"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={handleProfilePicChange}
-            />
-          </label>
-        </div>
         {/* User Info */}
         <div className="profile-card">
           <h3 className="profile-card-title">User info</h3>
+
           <div className="profile-row">
-            <label>Location</label>
-            <select
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              className="profile-input">
-              <option value="">Select country</option>
-              <option value="Belgium">Belgium</option>
-              <option value="Canada">Canada</option>
-              <option value="Denmark">Denmark</option>
-              <option value="Estonia">Estonia</option>
-              <option value="France">France</option>
-            </select>
-          </div>
-          <div className="profile-row">
-            <label>First name</label>
+            <label>Full Name</label>
             <input
               type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              className="profile-input"
-            />
-          </div>
-          <div className="profile-row">
-            <label>Last name</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
+              name="fullName"
+              value={formData.name}
               onChange={handleChange}
               className="profile-input"
             />
@@ -122,8 +74,8 @@ export default function UpdateProfile() {
             <label>Mobile number</label>
             <input
               type="tel"
-              name="mobileNumber"
-              value={formData.mobileNumber}
+              name="contact"
+              value={formData.contact}
               onChange={handleChange}
               className="profile-input"
             />
@@ -137,43 +89,6 @@ export default function UpdateProfile() {
               onChange={handleChange}
               className="profile-input"
             />
-          </div>
-        </div>
-
-        {/* Security */}
-        <div className="profile-card">
-          <h3 className="profile-card-title">Security</h3>
-          <div className="profile-row">
-            <label>Current password</label>
-            <input
-              type="password"
-              name="currentPassword"
-              value={formData.currentPassword}
-              onChange={handleChange}
-              className="profile-input"
-            />
-          </div>
-          <div className="profile-row">
-            <label>New password</label>
-            <input
-              type="password"
-              name="newPassword"
-              value={formData.newPassword}
-              onChange={handleChange}
-              className="profile-input"
-            />
-          </div>
-          <div className="profile-row profile-checkbox-row">
-            <input
-              type="checkbox"
-              id="makePublic"
-              name="makePublic"
-              checked={formData.makePublic}
-              onChange={handleChange}
-            />
-            <label htmlFor="makePublic" className="profile-checkbox-label">
-              Save Change
-            </label>
           </div>
         </div>
 

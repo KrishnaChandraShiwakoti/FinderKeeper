@@ -16,10 +16,10 @@ export function onLoginSuccess(token) {
   }
 }
 
-export function handleLogout() {
+export function handleLogout(message) {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-  alert("Session expired. Please login again.");
+  alert(message);
   window.location.href = "/login";
 }
 export function checkTokenExpiry() {
@@ -30,10 +30,10 @@ export function checkTokenExpiry() {
     const currentTime = Date.now();
 
     if (currentTime >= expiryTime) {
-      handleLogout();
+      handleLogout("Session expired. Please login again.");
     } else {
       setTimeout(() => {
-        handleLogout();
+        handleLogout("Session expired. Please login again.");
       }, expiryTime - currentTime);
     }
   }

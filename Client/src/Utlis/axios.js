@@ -6,3 +6,6 @@ export const auth = axios.create({
 export const items = axios.create({
   baseURL: "http://localhost:3000/api/item",
 });
+export const userApi = axios.create({
+  baseURL: "http://localhost:3000/api/user",
+});
