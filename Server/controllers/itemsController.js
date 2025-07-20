@@ -2,8 +2,6 @@ import User from "../model/user.js";
 import Images from "../model/image.js";
 import categories from "../model/category.js";
 import Items from "../model/items.js";
-import { where } from "sequelize";
-
 export const postItem = async (req, res) => {
   try {
     const {
@@ -91,9 +89,10 @@ export const getItemsByUser = async (req, res) => {
         .json({ message: "No data found for the given reporterId" });
     }
     const result = data.map((news) => {
+      const plain = typeof news.toJSON === "function" ? news.toJSON() : news;
       return {
-        ...news.toJSON(),
-        imageUrl: news.image ? `/uploads/${news.image.filename}` : null,
+        ...plain,
+        imageUrl: plain.image ? `/uploads/${plain.image.filename}` : null,
       };
     });
 
@@ -122,7 +121,7 @@ export const getAll = async (req, res) => {
     });
 
     const result = data.map((news) => {
-      const plain = news.toJSON();
+      const plain = typeof news.toJSON === "function" ? news.toJSON() : news;
       return {
         ...plain,
         imageUrl: plain.image ? `/uploads/${plain.image.filename}` : null,
@@ -158,7 +157,7 @@ export const getRecentItem = async (req, res) => {
     });
 
     const result = data.map((item) => {
-      const plain = item.toJSON();
+      const plain = typeof item.toJSON === "function" ? item.toJSON() : item;
       return {
         ...plain,
         imageUrl: plain.image ? `/uploads/${plain.image.filename}` : null,
@@ -185,7 +184,7 @@ export const getItemById = async (req, res) => {
     if (!data) {
       return res.status(404).json({ message: "No item found" });
     }
-    const plainData = data.toJSON();
+    const plainData = typeof data.toJSON === "function" ? data.toJSON() : data;
 
     // Find category name for this item
     let categoryName = "Unknown";
